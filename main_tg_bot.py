@@ -1,7 +1,7 @@
 from Saiga_7b_model import quest_answer
 import telebot
-
-bot = telebot.TeleBot('7400825974:AAFhmzxK8XED9OB0o9SbhrEyMBwiqp9f5gw')
+BOT_CODE=''
+bot = telebot.TeleBot(BOT_CODE)
 
 @bot.message_handler(commands=['start'])
 def main(message):
