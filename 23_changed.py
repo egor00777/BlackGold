@@ -2,7 +2,7 @@ import math
 import numpy as np 
 import pandas as pd
 import cv2
-
+import random
 
 class Neft():
     def __init__(self,photo):
@@ -111,11 +111,31 @@ class Neft():
     def main(self):
         data=self.DATA
         data_mine=[[False for _ in range(len(data[0]))] for _ in range(len(data))]
+        state = data_mine.copy()
+        temp = 1.0
+        n = 100
+        i = 0
+        while (i<n):
+            temp *= 0.9
+            i+=1
+            new_state = state.copy()
+            a = len(state)
+            b = len(state[0])
+            ra = random.randint(0,a-1)
+            rb = random.randint(0,b-1)
+            state[ra][rb] = not state[ra][rb]
+            f_old =self.answering(state)
+            f_new = self.answering(new_state)
+            if f_old== f_new: continue
+            if (f_old < f_new):
+                state = new_state.copy() 
+                continue
+            if (random.uniform(0,1)< math.exp(-(f_old - f_new)/temp)):
+                state = new_state.copy() 
+                continue
+            
+        return self.answering(state),state
 
-        
-
-
-        self.answering(data_mine)
     
 
 neft=Neft('new_test_photo.png')
